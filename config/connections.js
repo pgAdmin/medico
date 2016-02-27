@@ -18,6 +18,10 @@
  * For more information on configuration, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.connections.html
  */
+var db_host = process.env.OPENSHIFT_MYSQL_DB_HOST || 'localhost',
+    db_port = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306,
+    db_user = process.env.OPENSHIFT_MYSQL_DB_USERNAME || 'root',
+    db_password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD || '';
 
 module.exports.connections = {
 
@@ -42,9 +46,10 @@ module.exports.connections = {
   ***************************************************************************/
   mysqlServer: {
     adapter: 'sails-mysql',
-    host: 'localhost',
-    user: 'root',
-    password: 'nanosoft',
-    database: 'medico'
+    host: db_host,
+    port: db_port,
+    user: db_user,
+    password: db_password,
+    database: 'avasaram'
   }
 };
