@@ -56,5 +56,9 @@ module.exports.policies = {
   DoctorController: {
     edit: 'isDoctor',
     search: 'isPatient'
+  },
+
+  CallController: {
+    initiate: 'isPatient'
   }
 };

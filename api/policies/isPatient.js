@@ -14,6 +14,9 @@ module.exports = function isPatient (req, res, next) {
     if (!session ) return res.json(403, { code: 403, error: 'User is not logged in as Patient' });
 
     // If we made it all the way down here, looks like everything's ok, so we'll let the user through
-    next();
+    Patient.findOne({ id: session.userId }, function (err, patient){
+      req.query.source = patient.phoneNumber;
+      next();
+    });    
   });
 };
