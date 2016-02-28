@@ -40,8 +40,8 @@
 ################################################
 
 config/local.js
-
-
+config/env/development.js
+config/connections.js
 
 
 
@@ -117,5 +117,3 @@ nbproject
 .idea
 .node_history
 
-
-config/connections.js
