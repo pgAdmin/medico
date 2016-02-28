@@ -20,7 +20,7 @@ module.exports = {
     },
     duration: {
       type: 'integer',
-      defaultTo: 0
+      defaultsTo: 0
     },
     requestId: {
       type: 'string'
@@ -41,7 +41,7 @@ module.exports = {
     var params = {
       'to': patient, // The phone numer to which the all has to be placed separated by "<" delimiter
       'from' : '+14954954950', // The phone number to be used as the caller id
-      'answer_url' : 'http://3f62447a.ngrok.io/call/handler?number='+doctor, // The URL invoked by Plivo when the outbound call is answered
+      'answer_url' : 'http://avasaram.ml/call/patientCallback?number='+doctor, // The URL invoked by Plivo when the outbound call is answered
       'answer_method' : "POST", // The method used to call the answer_url
     };
 

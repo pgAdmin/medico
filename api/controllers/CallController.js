@@ -30,17 +30,24 @@ module.exports = {
       });
   },
   patientCallback: function (req, res) {
+    var resp = req.body;
+    Call.update({ requestId: resp["RequestUUID"] }, { callId: resp["CallUUID"] }, function (err, data) {
+      console.log('Patient - Callback');
+    });
+
     res.set('Content-Type', 'text/xml');
     var data = '<Response><Speak>Please wait while we connect you to the doctor...</Speak>';
-    data += '<Dial callerId="+14954954950" callbackUrl="http://greenpanda.xyz/call/doctorCallback"><Number>'+req.query.number+'</Number></Dial></Response>';
+    data += '<Dial callerId="+14954954950" callbackUrl="http://avasaram.ml/call/doctorCallback"><Number>'+req.query.number+'</Number></Dial></Response>';
     return res.send(data);
   },
   doctorCallback: function (req, res) {
     var data = req.body;
-    return res.send(null);
-  },
-  tester: function (req, res) {
-    // Call.makeCall(919840309508, 919741811304);
+    if(data["DialAction"] == "hangup") {
+      Call.update({ callId: data["CallUUID"] }, { status: "complete", duration: data["DialBLegDuration"] }, function(){});
+    } else if(data["DialAction"] == "answer") {
+      Call.update({ callId: data["CallUUID"] }, { status: "in-progress" }, function(){});
+    }
+    return res.send(data);
   }
 };
 

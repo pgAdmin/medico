@@ -34,12 +34,6 @@ module.exports = {
     callPoints: {
       type: 'float',
       defaultsTo: 0.0
-    },
-    toJSON: function() {
-      var obj = this.toObject();
-      delete obj.password;
-      delete obj.phoneNumber;
-      return obj;
     }
   }
 };
