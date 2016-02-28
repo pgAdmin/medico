@@ -60,5 +60,9 @@ module.exports.policies = {
 
   CallController: {
     initiate: 'isPatient'
+  },
+
+  TransactionController: {
+    loadCash: 'isPatient'
   }
 };

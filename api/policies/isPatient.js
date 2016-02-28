@@ -16,6 +16,7 @@ module.exports = function isPatient (req, res, next) {
     // If we made it all the way down here, looks like everything's ok, so we'll let the user through
     Patient.findOne({ id: session.userId }, function (err, patient){
       req.query.source = patient.phoneNumber;
+      req.query.patientId = patient.id;
       next();
     });    
   });
