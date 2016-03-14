@@ -21,7 +21,7 @@
 var db_host = process.env.OPENSHIFT_MYSQL_DB_HOST || 'localhost',
     db_port = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306,
     db_user = process.env.OPENSHIFT_MYSQL_DB_USERNAME || 'root',
-    db_password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD || '';
+    db_password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD || 'nanosoft';
 
 module.exports.connections = {
 

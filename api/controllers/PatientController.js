@@ -6,17 +6,33 @@
  */
 var md5 = require('md5');
 
+var _editParams = function(requestParams) {
+  var params = { };
+  if(requestParams.name) { params.name = requestParams.name; }
+  if(requestParams.phoneNumber) { params.phoneNumber = requestParams.phoneNumber; }
+  if(requestParams.password) { params.password = md5(requestParams.password); }
+  if(requestParams.gender) { params.gender = requestParams.gender; }
+  return params;
+};
+
 module.exports = {
 
   login: function (req, res) {
   	params = req.body || {};
+
+    // Find a patient with the following email and password
     Patient.findOne({
       email: params.email,
       password: md5(params.password)
     }).exec(function (err, data) {
+
+      // Return error if no record found.
       if (err) { return res.json(err); }
-      if (data) { 
+
+      if (data) {
         var token = md5(params.email+(new Date()).toJSON());
+
+        // If record is found, create a session token
         Session.create({
           token: token,
           userId: data.id,
@@ -45,20 +61,12 @@ module.exports = {
     });
   },
   edit: function (req, res) {
-    return res.json({ mocked: true });
-  },
-  populate: function (req, res) {
-    var factor = Math.ceil(Math.random()*1000);
-    Patient.create({
-      name: 'Patient '+factor,
-      email: 'test'+factor+'@gmail.com',
-      phoneNumber: '9840309'+factor,
-      gender: 'M',
-      password: md5('something')
-    }).exec(function (err, data){
-      if (err) { return res.json(err); }
-      return res.json(data);
-    });
+    params = req.body || {};
+
+    Patient.update({ id: req.query.patientId }, _editParams(params))
+    .exec(function (err, data){
+      if (err) { return res.json(500, err); }
+      return res.json(data[0]);
+    })
   }
 };
-

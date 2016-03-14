@@ -45,8 +45,7 @@ module.exports = {
       'answer_method' : "POST", // The method used to call the answer_url
     };
 
-    // p.make_call(params, callback);
-    callback('201', { request_uuid: 'some-dummy-uuid' });
+    p.make_call(params, callback);
   }
 };
 

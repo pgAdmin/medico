@@ -6,6 +6,15 @@
  */
 var md5 = require('md5');
 
+var _editParams = function(requestParams) {
+  var params = { };
+  if(requestParams.name) { params.name = requestParams.name; }
+  if(requestParams.phoneNumber) { params.phoneNumber = requestParams.phoneNumber; }
+  if(requestParams.password) { params.password = md5(requestParams.password); }
+  if(requestParams.gender) { params.gender = requestParams.gender; }
+  return params;
+};
+
 module.exports = {
 
   login: function (req, res) {
@@ -45,26 +54,19 @@ module.exports = {
     });
   },
   edit: function (req, res) {
-    return res.json({ mocked: true });
+    params = req.body || {};
+
+    Doctor.update({ id: req.query.doctorId }, _editParams(params))
+    .exec(function (err, data){
+      if (err) { return res.json(500, err); }
+      return res.json(data[0]);
+    })
   },
   search: function (req, res) {
     Doctor.find({}).exec(function (err, data){
       if (err) { return res.json(500, err); }
       return res.json(data);
     });
-  },
-  populate: function (req, res) {
-    var factor = Math.ceil(Math.random()*1000);
-    Doctor.create({
-      name: 'Doctor '+factor,
-      email: 'testd'+factor+'@gmail.com',
-      phoneNumber: '9840309'+factor,
-      gender: 'M',
-      password: md5('something')
-    }).exec(function (err, data){
-      if (err) { return res.json(err); }
-      return res.json(data);
-    });
-  }	
+  }
 };
 
