@@ -13,15 +13,15 @@ module.exports = {
           err = { code: 601, error: 'No user found.' };
           return res.json(500, err);
         }
-        Call.makeCall(req.query.source, doctor.phoneNumber,
+        Call.makeCall('91'+req.query.source, '91'+doctor.phoneNumber,
           function (status, response) {
             if(status != '201') {
               err = { code: 701, error: 'Could not initiate the call.' };
               return res.json(500, err);
             }
             Call.create({
-              src: req.query.source,
-              dest: doctor.phoneNumber,
+              src: '91'+req.query.source,
+              dest: '91'+doctor.phoneNumber,
               requestId: response.request_uuid
             }, function (err, data) {
               res.json({ message: 'Call initiated successfully.' });
