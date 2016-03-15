@@ -25,7 +25,8 @@
     "sails": "~0.12.1",
     "sails-disk": "~0.10.9",
     "sails-mysql": "^0.11.5",
-    "stripe": "^4.4.0"
+    "stripe": "^4.4.0",
+    "telapi": "^0.2.2"
   },
   "scripts": {
     "debug": "node debug app.js",

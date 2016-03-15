@@ -15,10 +15,10 @@ module.exports = {
         }
         Call.makeCall('91'+req.query.source, '91'+doctor.phoneNumber,
           function (status, response) {
-            if(status != '201') {
-              err = { code: 701, error: 'Could not initiate the call.' };
-              return res.json(500, err);
-            }
+            // if(status != '201') {
+            //   err = { code: 701, error: 'Could not initiate the call.' };
+            //   return res.json(500, err);
+            // }
             Call.create({
               src: '91'+req.query.source,
               dest: '91'+doctor.phoneNumber,
@@ -36,7 +36,8 @@ module.exports = {
     });
 
     res.set('Content-Type', 'text/xml');
-    var data = '<Response><Speak>Please wait while we connect you to the doctor...</Speak>';
+    // var data = '<Response><Speak>Please wait while we connect you to the doctor...</Speak>';
+    var data = '<Response><Say>Please wait while we connect you to the doctor...</Say>';
     data += '<Dial callerId="+14954954950" callbackUrl="http://avasaram.ml/call/doctorCallback"><Number>'+req.query.number+'</Number></Dial></Response>';
     return res.send(data);
   },
