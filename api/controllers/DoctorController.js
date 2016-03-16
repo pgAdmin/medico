@@ -49,6 +49,7 @@ module.exports = {
       email: params.email,
       phoneNumber: params.phoneNumber,
       gender: params.gender,
+      specialization: params.specialization,
       password: md5(params.password)
     }).exec(function (err, data){
       if (err) { return res.json(500, err); }
