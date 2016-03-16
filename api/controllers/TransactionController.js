@@ -5,7 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var stripe = require("stripe")("sk_test_LuHfBSHo95PpFmzKwWpwHnDY");
+var stripe = require("stripe")("sk_test_XkCEE9YuuqCOlEUVAOkMuCm3");
 
 module.exports = {
 
