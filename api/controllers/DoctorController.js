@@ -72,7 +72,7 @@ module.exports = {
     }).exec(function (err, data){
       if (err) { return res.json(err); }
       if (data) {
-        Doctor.update({ id: data.id }, { password: md5(password) }).exec();
+        Doctor.update({ id: data.id }, { password: md5(password) }).exec(function(){});
         mg.sendRaw('no-reply@avasaram.ml', data.email,
           'From: no-reply@avasaram.ml' +
           '\nContent-Type: text/html; charset=utf-8' +

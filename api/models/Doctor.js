@@ -31,6 +31,10 @@ module.exports = {
       type: 'string',
       required: true
     },
+    specialization: {
+      type: 'string',
+      required: false
+    },
     callPoints: {
       type: 'float',
       defaultsTo: 0.0
