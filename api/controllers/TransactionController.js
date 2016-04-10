@@ -10,7 +10,7 @@ var stripe = require("stripe")("sk_test_XkCEE9YuuqCOlEUVAOkMuCm3");
 module.exports = {
 
   loadCash: function (req, res) {
-    amount = req.body.amount;
+    amount = req.body.amount*100;
     source = req.body.card;
 
     stripe.charges.create({
@@ -28,12 +28,12 @@ module.exports = {
                 return res.json({ status: 200, message: 'Call points added successfully.', callPoints: resp.callPoints });
               })
             } else {
-              return res.json({ status: 801, message: 'Sorry, the payment was not successful.' });        
-            } 
+              return res.json(500, { status: 801, message: 'Sorry, the payment was not successful.' });
+            }
         })
       } else {
-        return res.json({ status: 801, message: 'Sorry, the payment was not successful.' });        
+        return res.json(500, { status: 801, message: 'Sorry, the payment was not successful.' });
       }
-    });   
+    });
   }
 };
