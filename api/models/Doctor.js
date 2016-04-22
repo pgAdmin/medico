@@ -35,6 +35,10 @@ module.exports = {
       type: 'string',
       required: false
     },
+    rate: {
+      type: 'float',
+      defaultsTo: 1.0
+    },
     callPoints: {
       type: 'float',
       defaultsTo: 0.0

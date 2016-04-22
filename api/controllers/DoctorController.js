@@ -14,6 +14,7 @@ var _editParams = function(requestParams) {
   if(requestParams.phoneNumber) { params.phoneNumber = requestParams.phoneNumber; }
   if(requestParams.password) { params.password = md5(requestParams.password); }
   if(requestParams.gender) { params.gender = requestParams.gender; }
+  if(requestParams.rate) { params.rate = requestParams.rate; }
   return params;
 };
 
@@ -26,7 +27,7 @@ module.exports = {
       password: md5(params.password)
     }).exec(function (err, data){
       if (err) { return res.json(err); }
-      if (data) { 
+      if (data) {
         var token = md5(params.email+(new Date()).toJSON());
         Session.create({
           token: token,
@@ -91,7 +92,7 @@ module.exports = {
         return res.json(500, err);
       }
     });
-  },  
+  },
   search: function (req, res) {
     Doctor.find({}).exec(function (err, data){
       if (err) { return res.json(500, err); }
