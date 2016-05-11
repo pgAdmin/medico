@@ -43,7 +43,23 @@ module.exports = {
   doctorCallback: function (req, res) {
     var data = req.body;
     if(data["DialAction"] == "hangup") {
-      Call.update({ callId: data["CallUUID"] }, { status: "complete", duration: data["DialBLegDuration"] }, function(){});
+      Call.update({ callId: data["CallUUID"] }, { status: "complete", duration: data["DialBLegDuration"] }, function(){
+        Call.findOne({ callId: data["CallUUID"] }, function (err, calldata) {
+          var docNo = calldata.dest.substr(2);
+          var patNo = calldata.src.substr(2);
+          Doctor.findOne({ phoneNumber: docNo }, function (err, doc) {
+            var docRate = parseInt(doc.rate);
+            var cost = docRate * Math.ceil(parseInt(data["DialBLegDuration"]) / 60);
+            doc.callPoints = parseInt(doc.callPoints) + cost;
+            Doctor.update({ phoneNumber: docNo }, { callPoints: doc.callPoints }, function(){});
+
+            Patient.findOne({ phoneNumber: patNo }, function (err, pat) {
+              pat.callPoints = pat.callPoints - cost;
+              Patient.update({ phoneNumber: patNo }, { callPoints: pat.callPoints }, function(){});
+            })
+          });
+        });
+      });
     } else if(data["DialAction"] == "answer") {
       Call.update({ callId: data["CallUUID"] }, { status: "in-progress" }, function(){});
     }
